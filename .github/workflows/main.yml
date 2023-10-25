@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Change directory to 2fafrontend
-        run: cd 2fafrontend
+        run: cd 2FA-Frontend\2fafrontend
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
