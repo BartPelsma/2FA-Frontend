@@ -25,4 +25,5 @@ jobs:
         run: npm test
 
       - name: Build React app
-        run: npm run build
+        run: cd /2fafrontend
+             npm run build
