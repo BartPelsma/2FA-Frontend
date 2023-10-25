@@ -37,8 +37,8 @@ jobs:
             cd 2fafrontend
             npm install -g sonarqube-scanner
             sonar-scanner \
-            -Dsonar.projectKey=<your_project_key> \
-            -Dsonar.organization=<your_organization_key> \
+            -Dsonar.projectKey=BartPelsma_2FA-Frontend \
+            -Dsonar.organization=bartpelsma \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=$SONAR_TOKEN
