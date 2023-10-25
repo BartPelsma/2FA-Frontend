@@ -30,3 +30,17 @@ jobs:
         run: | 
             cd 2fafrontend
             npm run build
+
+
+      - name: Analyze code with SonarCloud
+        run: |
+            cd 2fafrontend
+            npm install -g sonarqube-scanner
+            sonar-scanner \
+            -Dsonar.projectKey=<your_project_key> \
+            -Dsonar.organization=<your_organization_key> \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=$SONAR_TOKEN
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
