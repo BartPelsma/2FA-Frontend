@@ -3,38 +3,26 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main # of de naam van je hoofdbranch
+      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 14
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20.8.0
 
-    - name: Install dependencies and build
-      run: |
-        cd 2fafrontend
-        npm install
-        npm run build
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run SonarCloud analysis
-      run: |
-        npm install -g sonarcloud
-        sonar-scanner \
-          -Dsonar.projectKey=your_project_key \
-          -Dsonar.organization=your_organization_key \
-          -Dsonar.sources=. \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=your_sonarcloud_token
+      - name: Run tests
+        run: npm test
 
-    - name: Deploy to production
-      if: success() # Deploy alleen als de build, testen en SonarCloud-analyse succesvol zijn
-      run: |
-        # Voeg hier je deploy-script toe, bijvoorbeeld het kopiëren van bestanden naar een server.
-        # Voorbeeld: scp -r build/ user@server:/path/to/destination
+      - name: Build React app
+        run: npm run build
