@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main 
+      - main # of de naam van je hoofdbranch
 
 jobs:
   build:
@@ -17,11 +17,11 @@ jobs:
       with:
         node-version: 14
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build and test
-      run: npm run build
+    - name: Install dependencies and build
+      run: |
+        cd 2fafrontend
+        npm install
+        npm run build
 
     - name: Run SonarCloud analysis
       run: |
