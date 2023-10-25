@@ -19,10 +19,12 @@ jobs:
           node-version: 20.8.0
 
       - name: Install dependencies
-        run: npm install
+        run: cd /2fafrontend 
+            npm install
 
       - name: Run tests
-        run: npm test
+        run: cd /2fafrontend
+              npm test
 
       - name: Build React app
         run: cd /2fafrontend
