@@ -44,3 +44,25 @@ jobs:
             -Dsonar.login=$SONAR_TOKEN
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Run OWASP ZAP scan
+        run: |
+            # Download and install OWASP ZAP (assuming it's a JAR file)
+            wget https://github.com/zaproxy/zaproxy/releases/download/v2.11.0/ZAP_2.11.0_Linux.tar.gz
+            tar -xzvf ZAP_2.11.0_Linux.tar.gz
+            cd ZAP_2.11.0
+
+            # Start the OWASP ZAP daemon
+            ./zap.sh -daemon -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+
+            # Execute the ZAP spider against your local application
+            ./zap.sh -quickurl http://localhost:3000
+
+            # Perform active scan (optional, based on your needs)
+            # ./zap.sh -ajax spider --context-name Default Context --max-ajax-spider-time 1
+
+            # Generate a ZAP report (optional)
+            ./zap.sh -export report.html -html -all
+
+            # Stop the OWASP ZAP daemon
+            ./zap.sh -shutdown
